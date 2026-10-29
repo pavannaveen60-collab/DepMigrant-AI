@@ -74,6 +74,36 @@ npm run dev
 
 Open http://localhost:3000
 
+## Render API and Vercel frontend deployment
+
+The API is served by `app.main:app`; its health endpoint is `GET /health`.
+The SQLite default remains under the user's home directory for local development.
+On Render, when `DATABASE_URL` is unset, the API uses `/tmp/depmigrant.db`.
+That filesystem is ephemeral and the database can be lost when the service restarts
+or is redeployed. Use a persistent managed database and set `DATABASE_URL` for
+production data; do not rely on the temporary SQLite file for persistence.
+
+For a Render web service with the repository root as its Root Directory, use:
+
+```text
+Build Command: pip install .
+Start Command: uvicorn app.main:app --app-dir services/api --host 0.0.0.0 --port $PORT
+```
+
+Set backend secrets and optional database configuration in the Render service
+environment, not in source control:
+
+- `NEBIUS_API_KEY`, `NEBIUS_BASE_URL`, and `NEBIUS_MODEL` for the configured
+  Nebius provider, or the corresponding `NVIDIA_NIM_*` variables for NVIDIA NIM.
+- `DATABASE_URL` only when overriding the default SQLite URL; use a persistent
+  database URL for production.
+
+For the Vercel frontend, set `NEXT_PUBLIC_API_URL` to the Render API service's
+public origin (scheme and host, without `/api`). Next.js uses it for the `/api/*`
+and `/health` rewrites; if unset during local development, the frontend targets
+`http://localhost:8000`. Configure the value in Vercel and redeploy after changes.
+Do not put provider API keys in Vercel frontend environment variables.
+
 ## NVIDIA Nemotron + Nebius Integration
 
 DepMigrant AI uses **NVIDIA Nemotron 3 Ultra** via **Nebius AI Studio** for:

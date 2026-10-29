@@ -1,6 +1,8 @@
 .env
 .venv/
 venv/
+env/
+virtualenv/
 __pycache__/
 *.py[cod]
 *.bak
@@ -8,9 +10,13 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 *.db
+*.db-*
 apps/web/node_modules/
 apps/web/.next/
 apps/web/.next-dev/
+.next/
+dist/
+build/
 apps/web/next-env.d.ts
 
 # Local secrets and generated files
@@ -18,6 +24,8 @@ apps/web/next-env.d.ts
 !.env.example
 *.sqlite
 *.sqlite3
+*.sqlite-*
+*.sqlite3-*
 node_modules/
 .DS_Store
 *.zip

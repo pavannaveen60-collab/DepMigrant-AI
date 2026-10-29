@@ -57,7 +57,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["services"]
+where = ["services/api"]
 include = ["app*"]
 
 [tool.ruff]

@@ -1,7 +1,16 @@
-from pydantic_settings import BaseSettings
-from typing import Optional
 import os
 from pathlib import Path
+from typing import Optional
+
+from pydantic import Field
+from pydantic_settings import BaseSettings
+
+
+def _default_database_url() -> str:
+    if os.getenv("RENDER", "").lower() == "true":
+        return "sqlite:////tmp/depmigrant.db"
+    return f"sqlite:///{Path.home() / 'DepMigrant AI' / 'depmigrant.db'}"
+
 
 class Settings(BaseSettings):
     # Nebius / NVIDIA
@@ -20,7 +29,7 @@ class Settings(BaseSettings):
     api_workers: int = 1
     
     # Database
-    database_url: str = f"sqlite:///{Path.home() / 'DepMigrant AI' / 'depmigrant.db'}"
+    database_url: str = Field(default_factory=_default_database_url)
     
     # Sandbox
     sandbox_timeout: int = 300
