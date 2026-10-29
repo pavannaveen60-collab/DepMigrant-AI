@@ -1,0 +1,22 @@
+# Sample Python project for testing DepMigrant AI
+# This project has a real dependency that can be migrated
+
+[project]
+name = "sample-project"
+version = "0.1.0"
+description = "Sample project for DepMigrant AI testing"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.28.0,<2.30.0",
+    "click>=8.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
