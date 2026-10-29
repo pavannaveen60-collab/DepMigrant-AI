@@ -72,7 +72,7 @@ cd apps/web
 npm run dev
 ```
 
-Open http://localhost:3000
+Open http://localhost:3013
 
 ## Render API and Vercel frontend deployment
 
